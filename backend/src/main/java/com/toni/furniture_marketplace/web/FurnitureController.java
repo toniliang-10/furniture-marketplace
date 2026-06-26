@@ -1,13 +1,15 @@
 package com.toni.furniture_marketplace.web;
 
+import com.toni.furniture_marketplace.dto.FurnitureRequest;
+import com.toni.furniture_marketplace.dto.FurnitureResponse;
 import com.toni.furniture_marketplace.model.Category;
-import com.toni.furniture_marketplace.model.FurnitureItem;
 import com.toni.furniture_marketplace.model.ItemStatus;
 import com.toni.furniture_marketplace.service.FurnitureService;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,27 +32,29 @@ public class FurnitureController {
     }
 
     @GetMapping
-    public PagedModel<FurnitureItem> list(
+    public PagedModel<FurnitureResponse> list(
             @RequestParam(required = false) Category category,
             @RequestParam(required = false) ItemStatus status,
             Pageable pageable) {
-        return new PagedModel<>(service.search(category, status, pageable));
+        Page<FurnitureResponse> page = service.search(category, status, pageable)
+                .map(FurnitureResponse::from);
+        return new PagedModel<>(page);
     }
 
     @GetMapping("/{id}")
-    public FurnitureItem getOne(@PathVariable Long id) {
-        return service.findById(id);
+    public FurnitureResponse getOne(@PathVariable Long id) {
+        return FurnitureResponse.from(service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<FurnitureItem> create(@RequestBody FurnitureItem item) {
-        FurnitureItem saved = service.create(item);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    @ResponseStatus(HttpStatus.CREATED)
+    public FurnitureResponse create(@Valid @RequestBody FurnitureRequest request) {
+        return FurnitureResponse.from(service.create(request));
     }
 
     @PutMapping("/{id}")
-    public FurnitureItem update(@PathVariable Long id, @RequestBody FurnitureItem item) {
-        return service.update(id, item);
+    public FurnitureResponse update(@PathVariable Long id, @Valid @RequestBody FurnitureRequest request) {
+        return FurnitureResponse.from(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")

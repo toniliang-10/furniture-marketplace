@@ -1,8 +1,9 @@
 package com.toni.furniture_marketplace.web;
 
 import com.toni.furniture_marketplace.dto.InterestRequest;
-import com.toni.furniture_marketplace.model.Interest;
+import com.toni.furniture_marketplace.dto.InterestResponse;
 import com.toni.furniture_marketplace.service.InterestService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,7 @@ public class InterestController {
 
     @PostMapping("/{id}/interest")
     @ResponseStatus(HttpStatus.CREATED)
-    public Interest express(@PathVariable Long id, @RequestBody InterestRequest request) {
-        return interestService.expressInterest(id, request);
+    public InterestResponse express(@PathVariable Long id, @Valid @RequestBody InterestRequest request) {
+        return InterestResponse.from(interestService.expressInterest(id, request));
     }
 }

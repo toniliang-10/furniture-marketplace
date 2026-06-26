@@ -1,0 +1,18 @@
+# Spins up Postgres for the 'postgres' profile.
+# Start it with:  docker compose up -d
+# Stop it with:   docker compose down   (add -v to also delete the data volume)
+services:
+  postgres:
+    image: postgres:17
+    container_name: marketplace-postgres
+    environment:
+      POSTGRES_DB: marketplace
+      POSTGRES_USER: marketplace
+      POSTGRES_PASSWORD: marketplace
+    ports:
+      - "5432:5432"
+    volumes:
+      - marketplace-pgdata:/var/lib/postgresql/data
+
+volumes:
+  marketplace-pgdata:

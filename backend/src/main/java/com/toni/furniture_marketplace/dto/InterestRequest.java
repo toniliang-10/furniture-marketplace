@@ -1,7 +1,10 @@
 package com.toni.furniture_marketplace.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public record InterestRequest(
-        String buyerName,
-        String buyerEmail,
-        String message) {
+        @NotBlank String buyerName,
+        @NotBlank @Email String buyerEmail,
+        @NotBlank String message) {
 }

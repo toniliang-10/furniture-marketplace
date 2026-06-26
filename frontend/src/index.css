@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-slate-100 text-slate-900 antialiased;
+    margin: 0;
+    min-height: 100dvh;
+    /* Respect notches / safe areas on mobile. */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  /* The swipe surface should not trigger browser scroll/zoom while dragging. */
+  .touch-none {
+    touch-action: none;
+  }
+}

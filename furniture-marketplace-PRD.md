@@ -6,7 +6,7 @@ Build a furniture marketplace where users browse listings and express interest i
 
 ## Working method
 
-I write every code file myself. I do not ask Claude to write the code for me, because writing it by hand is how the concepts stick. Claude's role is to explain concepts, review what I write, point out bugs, answer questions, and suggest direction. It does not hand me finished files to paste.
+Claude gives me the whole file implementation for each piece, and I copy it myself by hand rather than having it written directly into my files. Copying it out is how I learn. Claude's role is to provide complete, working file implementations along with explanation, plus review, bug-spotting, and direction. I do the typing.
 
 ## Learning objectives
 

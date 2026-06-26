@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .authorizeHttpRequests(auth -> auth
                         // public: browsing, the H2 console, hello, expressing interest, registering
-                        .requestMatchers("/hello", "/h2-console/**").permitAll()
+                        .requestMatchers("/hello", "/h2-console/**", "/error").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/furniture/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/furniture/*/interest").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/sellers").permitAll()

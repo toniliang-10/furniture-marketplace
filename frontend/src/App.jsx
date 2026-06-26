@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { useFurnitureDeck } from './hooks/useFurnitureDeck.js';
 import SwipeDeck from './components/SwipeDeck.jsx';
 import InterestModal from './components/InterestModal.jsx';
+import SellModal from './components/SellModal.jsx';
 import CategoryFilter from './components/CategoryFilter.jsx';
 import EmptyState from './components/EmptyState.jsx';
 import Spinner from './components/Spinner.jsx';
@@ -56,6 +57,8 @@ export default function App() {
 
   // The item whose interest modal is open (null = closed).
   const [interestItem, setInterestItem] = useState(null);
+  // Whether the "Sell an item" modal is open.
+  const [sellOpen, setSellOpen] = useState(false);
 
   const handleInterest = useCallback((item) => {
     if (item) setInterestItem(item);
@@ -73,6 +76,13 @@ export default function App() {
     setInterestItem(null);
   }, [advance, interestItem]);
 
+  // After a successful listing, close the modal and reload the deck so the new
+  // item can appear in the active category.
+  const handleSellSubmitted = useCallback(() => {
+    setSellOpen(false);
+    reset();
+  }, [reset]);
+
   return (
     <div className="mx-auto flex min-h-[100dvh] w-full max-w-md flex-col px-5 pb-10 pt-8">
       {/* Masthead */}
@@ -85,6 +95,13 @@ export default function App() {
           className="mx-auto mt-3 h-px w-12 bg-line-strong"
           aria-hidden="true"
         />
+        <button
+          type="button"
+          onClick={() => setSellOpen(true)}
+          className="mx-auto mt-4 rounded-sm border border-line-strong bg-paper-raised px-4 py-1.5 text-xs font-medium uppercase tracking-overline text-ink-600 transition-colors hover:bg-paper-sunk hover:text-ink-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay-500"
+        >
+          Sell an item
+        </button>
       </header>
 
       {/* Category filter */}
@@ -147,6 +164,13 @@ export default function App() {
           item={interestItem}
           onClose={() => setInterestItem(null)}
           onSubmitted={handleSubmitted}
+        />
+      )}
+
+      {sellOpen && (
+        <SellModal
+          onClose={() => setSellOpen(false)}
+          onSubmitted={handleSellSubmitted}
         />
       )}
     </div>

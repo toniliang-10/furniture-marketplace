@@ -34,9 +34,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/furniture/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/furniture/*/interest").permitAll()
+                        // public: the open "Sell an item" flow (no auth) — list an item and upload its image
+                        .requestMatchers(HttpMethod.POST, "/api/furniture").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/uploads").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/sellers").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/sellers/**").permitAll()
-                        // everything else (creating/updating/deleting listings) needs login
+                        // everything else (updating/deleting listings) needs login
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
 

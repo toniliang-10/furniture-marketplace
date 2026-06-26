@@ -112,3 +112,60 @@ export async function expressInterest(itemId, payload) {
     body: JSON.stringify(payload),
   });
 }
+
+/**
+ * Create a seller account. Used by the "Sell an item" flow before listing.
+ * @param {{ name: string, email: string }} payload
+ * @returns {Promise<object>} the created seller, including its `id`
+ */
+export async function createSeller({ name, email }) {
+  return request('/api/sellers', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email }),
+  });
+}
+
+/**
+ * Upload a furniture image. Sends multipart/form-data; the browser sets the
+ * Content-Type (with boundary) itself, so we must NOT set it manually.
+ * @param {File} file
+ * @returns {Promise<{ url: string, filename: string }>} absolute URL to the stored image
+ */
+export async function uploadImage(file) {
+  const data = new FormData();
+  data.append('file', file);
+  return request('/api/uploads', { method: 'POST', body: data });
+}
+
+/**
+ * Create a furniture listing. New items default to AVAILABLE on the backend,
+ * so they show up in the deck automatically — do not send a status field.
+ * Optional keys are omitted when empty so the backend keeps them null.
+ * @param {object} payload
+ * @param {string} payload.title
+ * @param {string} [payload.description]
+ * @param {number} payload.price
+ * @param {string} payload.category - Category enum (SOFA, TABLE, ...).
+ * @param {string} [payload.imageUrl]
+ * @param {number} payload.sellerId
+ * @returns {Promise<object>} the created FurnitureResponse
+ */
+export async function createFurniture({
+  title,
+  description,
+  price,
+  category,
+  imageUrl,
+  sellerId,
+}) {
+  const body = { title, price: Number(price), category, sellerId };
+  if (description) body.description = description;
+  if (imageUrl) body.imageUrl = imageUrl;
+
+  return request('/api/furniture', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+}

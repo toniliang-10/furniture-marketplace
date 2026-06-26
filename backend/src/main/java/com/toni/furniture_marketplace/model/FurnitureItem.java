@@ -1,5 +1,6 @@
 package com.toni.furniture_marketplace.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -42,6 +43,7 @@ public class FurnitureItem {
     private Seller seller;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Interest> interests = new ArrayList<>();
 
     private Instant createdAt;

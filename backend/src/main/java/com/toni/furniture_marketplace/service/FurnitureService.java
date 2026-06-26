@@ -1,8 +1,11 @@
 package com.toni.furniture_marketplace.service;
 
+import com.toni.furniture_marketplace.model.Category;
 import com.toni.furniture_marketplace.model.FurnitureItem;
+import com.toni.furniture_marketplace.model.ItemStatus;
 import com.toni.furniture_marketplace.repository.FurnitureItemRepository;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,8 +19,17 @@ public class FurnitureService {
         this.repository = repository;
     }
 
-    public List<FurnitureItem> findAll() {
-        return repository.findAll();
+    public Page<FurnitureItem> search(Category category, ItemStatus status, Pageable pageable) {
+        if (category != null && status != null) {
+            return repository.findByCategoryAndStatus(category, status, pageable);
+        }
+        if (category != null) {
+            return repository.findByCategory(category, pageable);
+        }
+        if (status != null) {
+            return repository.findByStatus(status, pageable);
+        }
+        return repository.findAll(pageable);
     }
 
     public FurnitureItem findById(Long id) {

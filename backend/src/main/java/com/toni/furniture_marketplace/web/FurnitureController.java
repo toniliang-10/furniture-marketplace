@@ -1,8 +1,11 @@
 package com.toni.furniture_marketplace.web;
 
+import com.toni.furniture_marketplace.model.Category;
 import com.toni.furniture_marketplace.model.FurnitureItem;
+import com.toni.furniture_marketplace.model.ItemStatus;
 import com.toni.furniture_marketplace.service.FurnitureService;
-import java.util.List;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,8 +30,11 @@ public class FurnitureController {
     }
 
     @GetMapping
-    public List<FurnitureItem> list() {
-        return service.findAll();
+    public PagedModel<FurnitureItem> list(
+            @RequestParam(required = false) Category category,
+            @RequestParam(required = false) ItemStatus status,
+            Pageable pageable) {
+        return new PagedModel<>(service.search(category, status, pageable));
     }
 
     @GetMapping("/{id}")

@@ -9,7 +9,7 @@ export default function Spinner({ label = 'Loading', className = '' }) {
       className={`inline-flex items-center justify-center ${className}`}
     >
       <svg
-        className="h-8 w-8 animate-spin text-brand-600"
+        className="h-8 w-8 animate-spin text-clay-500"
         viewBox="0 0 24 24"
         fill="none"
         aria-hidden="true"

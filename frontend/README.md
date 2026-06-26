@@ -1,12 +1,13 @@
-# Swipe & Sit — Furniture Marketplace (Frontend)
+# Maison — Furniture Marketplace (Frontend)
 
-A buyer-facing, Tinder-style swipe deck for browsing furniture listings and
-expressing interest. Built with **Vite + React + Tailwind CSS** and
-**framer-motion** for the drag/spring gestures.
+A buyer-facing, swipe-deck for browsing furniture listings and expressing
+interest. Built with **Vite + React + Tailwind CSS** and **framer-motion** for
+the drag/spring gestures, with a restrained editorial visual language (warm
+neutral palette, Fraunces serif display + Inter body, hairline borders).
 
-Swipe **right** (or tap the heart) to express interest in an item — this opens a
-short form and POSTs to the backend, which emails the seller. Swipe **left** to
-skip. Works with mouse drag, touch drag, on-screen buttons, and the
+Swipe **right** (or use the interest button) to express interest in an item —
+this opens a short form and POSTs to the backend, which emails the seller. Swipe
+**left** to pass. Works with mouse drag, touch drag, on-screen buttons, and the
 **Arrow Left / Arrow Right** keys.
 
 ## Prerequisites
@@ -78,7 +79,12 @@ this app is browse + express-interest only.
 
 ## Notes
 
-- `imageUrl` can be null/empty (and the seed data uses placeholder URLs that
-  don't resolve); the card shows a graceful "No photo" placeholder in that case.
+- Images: each card tries `imageUrl` first. The seed data ships placeholder URLs
+  (e.g. `example.com/sofa.jpg`) that don't resolve, so when a source fails the
+  card falls back to a category-relevant stock photo (loremflickr, stable per
+  item id), and finally to an inline "No image" mark if that also fails. Point
+  `imageUrl` at real images and they'll be used directly.
+- The full description is scrollable inside the card (vertical scroll/drag),
+  while horizontal drag still drives the swipe.
 - Network failures and non-2xx responses surface a friendly message; the form
   maps backend 400 field errors back onto the inputs.

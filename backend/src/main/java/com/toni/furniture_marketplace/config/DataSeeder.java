@@ -11,6 +11,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataSeeder implements CommandLineRunner {
 
+    // Base URL for the seed/template images served from src/main/resources/static/.
+    // Anything under static/ is served at the web root, so static/images/furniture/sofa1.png
+    // resolves at http://localhost:8080/images/furniture/sofa1.png.
+    private static final String IMG = "http://localhost:8080/images/furniture/";
+
     private final SellerRepository sellerRepository;
 
     public DataSeeder(SellerRepository sellerRepository) {
@@ -29,13 +34,25 @@ public class DataSeeder implements CommandLineRunner {
                 "Comfortable 3-seater, light wear",
                 new BigDecimal("450.00"),
                 Category.SOFA,
-                "https://example.com/sofa.jpg"));
+                IMG + "sofa1.png"));
+        alice.addItem(new FurnitureItem(
+                "Leather loveseat",
+                "Two-seater, supple tan leather",
+                new BigDecimal("380.00"),
+                Category.SOFA,
+                IMG + "sofa2.png"));
         alice.addItem(new FurnitureItem(
                 "Oak dining table",
                 "Seats six, solid oak",
                 new BigDecimal("300.00"),
                 Category.TABLE,
-                "https://example.com/table.jpg"));
+                IMG + "table1.png"));
+        alice.addItem(new FurnitureItem(
+                "Glass coffee table",
+                "Tempered glass top, steel frame",
+                new BigDecimal("150.00"),
+                Category.TABLE,
+                IMG + "table2.png"));
 
         Seller bob = new Seller("Bob", "bob@example.com");
         bob.addItem(new FurnitureItem(
@@ -43,8 +60,40 @@ public class DataSeeder implements CommandLineRunner {
                 "Adjustable height and lumbar support",
                 new BigDecimal("120.00"),
                 Category.CHAIR,
-                "https://example.com/chair.jpg"));
+                IMG + "chair1.png"));
+        bob.addItem(new FurnitureItem(
+                "Upholstered accent armchair",
+                "Cozy reading chair with wooden legs",
+                new BigDecimal("90.00"),
+                Category.CHAIR,
+                IMG + "chair2.png"));
+        bob.addItem(new FurnitureItem(
+                "Sit-stand desk",
+                "Electric height adjustment, walnut top",
+                new BigDecimal("260.00"),
+                Category.DESK,
+                IMG + "desk1.png"));
+        bob.addItem(new FurnitureItem(
+                "Compact writing desk",
+                "Small footprint, one drawer",
+                new BigDecimal("110.00"),
+                Category.DESK,
+                IMG + "desk2.png"));
 
-        sellerRepository.saveAll(java.util.List.of(alice, bob));
+        Seller carol = new Seller("Carol", "carol@example.com");
+        carol.addItem(new FurnitureItem(
+                "Queen platform bed",
+                "Low-profile frame, no box spring needed",
+                new BigDecimal("420.00"),
+                Category.BED,
+                IMG + "bed1.png"));
+        carol.addItem(new FurnitureItem(
+                "Solid wood bunk bed",
+                "Twin over twin, includes ladder",
+                new BigDecimal("340.00"),
+                Category.BED,
+                IMG + "bed2.png"));
+
+        sellerRepository.saveAll(java.util.List.of(alice, bob, carol));
     }
 }

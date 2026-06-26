@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-slate-100 text-slate-900 antialiased;
+    @apply bg-paper font-sans text-ink-700 antialiased;
     margin: 0;
     min-height: 100dvh;
     /* Respect notches / safe areas on mobile. */
@@ -16,8 +16,33 @@
       env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
 
+  /* Headings default to the serif display face. */
+  h1,
+  h2 {
+    @apply font-display text-ink-900;
+  }
+
+  /* Warm, restrained text selection. */
+  ::selection {
+    background-color: theme('colors.clay.100');
+    color: theme('colors.ink.900');
+  }
+
   /* The swipe surface should not trigger browser scroll/zoom while dragging. */
   .touch-none {
     touch-action: none;
+  }
+
+  /* Allow vertical panning (native scroll) while horizontal gestures drive the
+     swipe. Used by the scrollable description inside a draggable card. */
+  .pan-y {
+    touch-action: pan-y;
+  }
+}
+
+@layer components {
+  /* Small uppercase, letter-spaced label used for kickers / meta lines. */
+  .overline {
+    @apply text-[0.7rem] font-semibold uppercase tracking-overline text-ink-400;
   }
 }

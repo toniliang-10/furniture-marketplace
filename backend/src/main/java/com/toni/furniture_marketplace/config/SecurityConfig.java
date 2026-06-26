@@ -30,6 +30,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // public: browsing, the H2 console, hello, expressing interest, registering
                         .requestMatchers("/hello", "/h2-console/**", "/error").permitAll()
+                        // public: static assets (placeholder furniture images live under static/images/)
+                        .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/furniture/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/furniture/*/interest").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/sellers").permitAll()

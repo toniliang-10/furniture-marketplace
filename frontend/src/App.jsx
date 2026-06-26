@@ -6,6 +6,41 @@ import CategoryFilter from './components/CategoryFilter.jsx';
 import EmptyState from './components/EmptyState.jsx';
 import Spinner from './components/Spinner.jsx';
 
+// Shared restrained-button class for the empty/error state actions.
+const primaryAction =
+  'rounded-sm border border-ink-900 bg-ink-900 px-5 py-2.5 text-sm font-medium tracking-wide text-paper-raised transition-colors hover:bg-ink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay-500';
+
+function AlertIcon() {
+  return (
+    <svg
+      className="h-6 w-6"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      aria-hidden="true"
+    >
+      <path d="M12 9v4M12 17h.01" strokeLinecap="round" />
+      <path d="M10.3 4.3 2.5 18a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0z" />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg
+      className="h-6 w-6"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      aria-hidden="true"
+    >
+      <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export default function App() {
   const {
     category,
@@ -39,24 +74,21 @@ export default function App() {
   }, [advance, interestItem]);
 
   return (
-    <div className="mx-auto flex min-h-[100dvh] w-full max-w-md flex-col px-4 pb-8 pt-6">
-      {/* Header */}
-      <header className="mb-4 shrink-0">
-        <div className="flex items-center gap-2">
-          <span className="text-2xl" aria-hidden="true">
-            🛋️
-          </span>
-          <h1 className="text-xl font-extrabold tracking-tight text-slate-900">
-            Swipe &amp; Sit
-          </h1>
-        </div>
-        <p className="mt-0.5 text-sm text-slate-500">
-          Find furniture you love — swipe right to reach out.
-        </p>
+    <div className="mx-auto flex min-h-[100dvh] w-full max-w-md flex-col px-5 pb-10 pt-8">
+      {/* Masthead */}
+      <header className="mb-7 shrink-0 text-center">
+        <p className="overline">Considered Furniture, Resold</p>
+        <h1 className="mt-2 font-display text-3xl font-medium tracking-tight text-ink-900">
+          Maison
+        </h1>
+        <div
+          className="mx-auto mt-3 h-px w-12 bg-line-strong"
+          aria-hidden="true"
+        />
       </header>
 
       {/* Category filter */}
-      <div className="mb-5 shrink-0">
+      <div className="mb-7 shrink-0">
         <CategoryFilter
           value={category}
           onChange={changeCategory}
@@ -67,23 +99,19 @@ export default function App() {
       {/* Main deck area */}
       <main className="flex flex-1 items-center justify-center">
         {status === 'loading' && (
-          <div className="flex flex-col items-center gap-3 text-slate-500">
+          <div className="flex flex-col items-center gap-4 text-ink-500">
             <Spinner label="Loading furniture" />
-            <p className="text-sm">Loading furniture…</p>
+            <p className="text-sm tracking-wide">Loading the collection…</p>
           </div>
         )}
 
         {status === 'error' && (
           <EmptyState
-            icon="⚠️"
-            title="Couldn't load items"
+            icon={<AlertIcon />}
+            title="Unable to load"
             message={error?.message ?? 'Something went wrong.'}
             action={
-              <button
-                type="button"
-                onClick={reset}
-                className="rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
-              >
+              <button type="button" onClick={reset} className={primaryAction}>
                 Try again
               </button>
             }
@@ -92,15 +120,11 @@ export default function App() {
 
         {status === 'ready' && isEmpty && (
           <EmptyState
-            icon="🎉"
-            title="You're all caught up"
-            message="No more items to show right now. Check back later or start over."
+            icon={<CheckIcon />}
+            title="You've seen everything"
+            message="There are no more pieces to show right now. Check back later, or start again from the top."
             action={
-              <button
-                type="button"
-                onClick={reset}
-                className="rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
-              >
+              <button type="button" onClick={reset} className={primaryAction}>
                 Start over
               </button>
             }

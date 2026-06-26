@@ -1,17 +1,24 @@
 /**
  * Generic centered message used for empty / error / end-of-deck states.
- * `icon` is an emoji or short string; `action` renders an optional button.
+ * `icon` is an optional React node (a line SVG); `action` renders an optional button.
  */
-export default function EmptyState({ icon = '🛋️', title, message, action }) {
+export default function EmptyState({ icon, title, message, action }) {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-4 rounded-3xl bg-white/70 p-8 text-center ring-1 ring-black/5">
-      <span className="text-5xl" aria-hidden="true">
-        {icon}
-      </span>
-      <div className="space-y-1">
-        <h2 className="text-lg font-bold text-slate-900">{title}</h2>
+    <div className="flex h-full w-full flex-col items-center justify-center gap-5 rounded-card border border-line bg-paper-raised p-10 text-center shadow-soft">
+      {icon && (
+        <span
+          className="flex h-12 w-12 items-center justify-center rounded-full border border-line text-ink-400"
+          aria-hidden="true"
+        >
+          {icon}
+        </span>
+      )}
+      <div className="space-y-2">
+        <h2 className="font-display text-xl font-medium text-ink-900">{title}</h2>
         {message && (
-          <p className="mx-auto max-w-xs text-sm text-slate-500">{message}</p>
+          <p className="mx-auto max-w-xs text-sm leading-relaxed text-ink-500">
+            {message}
+          </p>
         )}
       </div>
       {action}

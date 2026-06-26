@@ -134,30 +134,28 @@ export default function InterestModal({ item, onClose, onSubmitted }) {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 40, opacity: 0 }}
           transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-          className="w-full max-w-md rounded-t-3xl bg-white p-6 shadow-xl sm:rounded-3xl"
+          className="w-full max-w-md rounded-t-card border border-line bg-paper-raised p-7 shadow-card sm:rounded-card"
         >
           {success ? (
             <SuccessView item={item} onClose={() => onSubmitted()} />
           ) : (
             <>
-              <div className="mb-4 flex items-start justify-between gap-4">
+              <div className="mb-6 flex items-start justify-between gap-4">
                 <div>
-                  <h2 id={titleId} className="text-lg font-bold text-slate-900">
-                    I&apos;m interested
+                  <p className="overline">Express interest</p>
+                  <h2
+                    id={titleId}
+                    className="mt-1.5 font-display text-2xl font-medium leading-tight text-ink-900"
+                  >
+                    {item.title}
                   </h2>
-                  <p className="mt-0.5 text-sm text-slate-500">
-                    About{' '}
-                    <span className="font-medium text-slate-700">
-                      {item.title}
-                    </span>
-                  </p>
                 </div>
                 <button
                   type="button"
                   onClick={onClose}
                   disabled={submitting}
                   aria-label="Close"
-                  className="-mr-1 -mt-1 rounded-full p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:opacity-50"
+                  className="-mr-1 -mt-1 rounded-full p-2 text-ink-400 transition-colors hover:bg-paper-sunk hover:text-ink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay-500 disabled:opacity-50"
                 >
                   <svg
                     className="h-5 w-5"
@@ -209,25 +207,25 @@ export default function InterestModal({ item, onClose, onSubmitted }) {
                 {submitError && (
                   <p
                     role="alert"
-                    className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700"
+                    className="border-l-2 border-red-400 bg-red-50/70 px-3 py-2 text-sm text-red-800"
                   >
                     {submitError}
                   </p>
                 )}
 
-                <div className="flex gap-3 pt-1">
+                <div className="flex gap-3 pt-2">
                   <button
                     type="button"
                     onClick={onClose}
                     disabled={submitting}
-                    className="flex-1 rounded-xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400 disabled:opacity-50"
+                    className="flex-1 rounded-sm border border-line-strong bg-paper-raised px-4 py-3 text-sm font-medium tracking-wide text-ink-700 transition-colors hover:bg-paper-sunk focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-400 disabled:opacity-50"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:opacity-60"
+                    className="flex-1 rounded-sm border border-ink-900 bg-ink-900 px-4 py-3 text-sm font-medium tracking-wide text-paper-raised transition-colors hover:bg-ink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay-500 disabled:opacity-60"
                   >
                     {submitting ? 'Sending…' : 'Send interest'}
                   </button>
@@ -243,31 +241,33 @@ export default function InterestModal({ item, onClose, onSubmitted }) {
 
 function SuccessView({ item, onClose }) {
   return (
-    <div className="flex flex-col items-center gap-3 py-4 text-center">
-      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-100 text-brand-600">
+    <div className="flex flex-col items-center gap-4 py-4 text-center">
+      <div className="flex h-14 w-14 items-center justify-center rounded-full border border-clay-200 bg-clay-50 text-clay-600">
         <svg
           className="h-7 w-7"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2.5"
+          strokeWidth="1.75"
           aria-hidden="true"
         >
           <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
-      <h2 className="text-lg font-bold text-slate-900">Interest sent!</h2>
-      <p className="max-w-xs text-sm text-slate-500">
+      <h2 className="font-display text-2xl font-medium text-ink-900">
+        Interest sent
+      </h2>
+      <p className="max-w-xs text-sm leading-relaxed text-ink-500">
         We&apos;ve let the seller of{' '}
-        <span className="font-medium text-slate-700">{item.title}</span> know.
-        They&apos;ll reach out by email.
+        <span className="font-medium text-ink-700">{item.title}</span> know.
+        They&apos;ll reach out to you by email.
       </p>
       <button
         type="button"
         onClick={onClose}
-        className="mt-2 rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+        className="mt-1 rounded-sm border border-ink-900 bg-ink-900 px-5 py-2.5 text-sm font-medium tracking-wide text-paper-raised transition-colors hover:bg-ink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay-500"
       >
-        Next item
+        Continue browsing
       </button>
     </div>
   );
@@ -290,17 +290,20 @@ const Field = forwardRef(function Field(
     'aria-describedby': error ? errorId : undefined,
     onChange: (e) => onChange(e.target.value),
     className: [
-      'w-full rounded-xl border bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm transition',
-      'placeholder:text-slate-400',
-      'focus:outline-none focus:ring-2 focus:ring-brand-500/40',
+      'w-full rounded-sm border bg-paper px-3.5 py-2.5 text-sm text-ink-900 transition-colors',
+      'placeholder:text-ink-400',
+      'focus:outline-none focus:bg-paper-raised',
       error
-        ? 'border-red-400 focus:border-red-400'
-        : 'border-slate-200 focus:border-brand-500',
+        ? 'border-red-400 focus:border-red-500'
+        : 'border-line-strong focus:border-clay-500',
     ].join(' '),
   };
   return (
     <div>
-      <label htmlFor={id} className="mb-1 block text-sm font-medium text-slate-700">
+      <label
+        htmlFor={id}
+        className="mb-1.5 block text-xs font-semibold uppercase tracking-overline text-ink-500"
+      >
         {label}
       </label>
       {as === 'textarea' ? (
@@ -309,7 +312,7 @@ const Field = forwardRef(function Field(
         <input {...common} {...rest} />
       )}
       {error && (
-        <p id={errorId} className="mt-1 text-xs text-red-600">
+        <p id={errorId} className="mt-1.5 text-xs text-red-600">
           {error}
         </p>
       )}

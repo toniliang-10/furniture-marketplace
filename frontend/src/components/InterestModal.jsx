@@ -134,7 +134,7 @@ export default function InterestModal({ item, onClose, onSubmitted }) {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 40, opacity: 0 }}
           transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-          className="w-full max-w-md rounded-t-card border border-line bg-paper-raised p-7 shadow-card sm:rounded-card"
+          className="max-h-[92%] w-full max-w-md overflow-y-auto rounded-t-card border border-line bg-paper-raised p-7 shadow-card sm:rounded-card"
         >
           {success ? (
             <SuccessView item={item} onClose={() => onSubmitted()} />

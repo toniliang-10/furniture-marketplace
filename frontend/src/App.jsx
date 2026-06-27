@@ -84,7 +84,7 @@ export default function App() {
   }, [reset]);
 
   return (
-    <div className="mx-auto flex min-h-[100dvh] w-full max-w-md flex-col px-5 pb-10 pt-8">
+    <div className="mx-auto flex min-h-[100dvh] w-full max-w-md flex-col px-5 pb-10 pt-8 md:min-h-full md:pt-12">
       {/* Masthead */}
       <header className="mb-7 shrink-0 text-center">
         <p className="overline">Considered Furniture, Resold</p>

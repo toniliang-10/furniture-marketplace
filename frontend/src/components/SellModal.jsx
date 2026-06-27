@@ -247,7 +247,7 @@ export default function SellModal({ onClose, onSubmitted }) {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 40, opacity: 0 }}
           transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-          className="max-h-[92dvh] w-full max-w-md overflow-y-auto rounded-t-card border border-line bg-paper-raised p-7 shadow-card sm:rounded-card"
+          className="max-h-[92%] w-full max-w-md overflow-y-auto rounded-t-card border border-line bg-paper-raised p-7 shadow-card sm:rounded-card"
         >
           {success ? (
             <SuccessView title={form.title.trim()} onClose={() => onSubmitted()} />

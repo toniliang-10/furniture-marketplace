@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
                 Instant.now(),
                 HttpStatus.BAD_REQUEST.value(),
                 "Bad Request",
-                "Image is too large. Maximum size is 8 MB.",
+                "Image is too large. Maximum size is 10 MB.",
                 null);
         return ResponseEntity.badRequest().body(body);
     }

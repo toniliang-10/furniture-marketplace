@@ -27,7 +27,7 @@ const ACCEPTED_IMAGE_TYPES = [
   'image/webp',
   'image/gif',
 ];
-const MAX_IMAGE_BYTES = 8 * 1024 * 1024; // 8 MB
+const MAX_IMAGE_BYTES = 10 * 1024 * 1024; // 10 MB
 
 /**
  * Modal form for listing a furniture item for sale. Owns a two-step POST flow
@@ -139,7 +139,7 @@ export default function SellModal({ onClose, onSubmitted }) {
     if (file.size > MAX_IMAGE_BYTES) {
       setErrors((prev) => ({
         ...prev,
-        image: 'Image is too large. Maximum size is 8 MB.',
+        image: 'Image is too large. Maximum size is 10 MB.',
       }));
       return;
     }

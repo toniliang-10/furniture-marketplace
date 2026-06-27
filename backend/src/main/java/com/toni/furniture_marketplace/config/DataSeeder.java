@@ -28,7 +28,7 @@ public class DataSeeder implements CommandLineRunner {
             return; // already seeded
         }
 
-        Seller alice = new Seller("Alice", "alice@example.com");
+        Seller alice = new Seller("Alice", "toniliang10@gmail.com");
         alice.addItem(new FurnitureItem(
                 "Mid-century sofa",
                 "Comfortable 3-seater, light wear",
@@ -54,7 +54,7 @@ public class DataSeeder implements CommandLineRunner {
                 Category.TABLE,
                 IMG + "table2.png"));
 
-        Seller bob = new Seller("Bob", "bob@example.com");
+        Seller bob = new Seller("Bob", "toniliang10@gmail.com");
         bob.addItem(new FurnitureItem(
                 "Ergonomic office chair",
                 "Adjustable height and lumbar support",
@@ -80,7 +80,7 @@ public class DataSeeder implements CommandLineRunner {
                 Category.DESK,
                 IMG + "desk2.png"));
 
-        Seller carol = new Seller("Carol", "carol@example.com");
+        Seller carol = new Seller("Carol", "toniliang10@gmail.com");
         carol.addItem(new FurnitureItem(
                 "Queen platform bed",
                 "Low-profile frame, no box spring needed",

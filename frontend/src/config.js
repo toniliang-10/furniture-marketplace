@@ -4,6 +4,19 @@ export const API_BASE_URL = (
   import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080'
 ).replace(/\/+$/, '');
 
+/**
+ * Resolve a furniture image URL for use as an <img> src.
+ * Backend stores host-relative paths (e.g. "/images/furniture/sofa1.png") so the
+ * data is independent of where the backend is deployed; we prepend API_BASE_URL
+ * here. Already-absolute URLs (http/https/data) are returned unchanged so older
+ * records and external images still work.
+ */
+export function resolveImageUrl(url) {
+  if (!url) return url;
+  if (/^(https?:|data:|blob:)/i.test(url)) return url;
+  return `${API_BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+}
+
 // Category enum values mirrored from the backend (model/Category.java).
 // `value` matches the API enum; `label` is the human-facing chip text.
 export const CATEGORIES = [

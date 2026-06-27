@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { resolveImageUrl } from '../config.js';
 import { formatCategory, formatPrice } from '../utils/format.js';
 
 /**
@@ -11,7 +12,7 @@ import { formatCategory, formatPrice } from '../utils/format.js';
  */
 function buildImageSources(item) {
   const sources = [];
-  if (item.imageUrl) sources.push(item.imageUrl);
+  if (item.imageUrl) sources.push(resolveImageUrl(item.imageUrl));
   return sources;
 }
 

@@ -11,10 +11,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataSeeder implements CommandLineRunner {
 
-    // Base URL for the seed/template images served from src/main/resources/static/.
+    // Relative path for the seed/template images served from src/main/resources/static/.
     // Anything under static/ is served at the web root, so static/images/furniture/sofa1.png
-    // resolves at http://localhost:8080/images/furniture/sofa1.png.
-    private static final String IMG = "http://localhost:8080/images/furniture/";
+    // resolves at <backend>/images/furniture/sofa1.png. We store the path WITHOUT a host so
+    // the URL is independent of where the backend is deployed; the frontend prepends its
+    // configured API base URL when rendering (see FurnitureCard / resolveImageUrl).
+    private static final String IMG = "/images/furniture/";
 
     private final SellerRepository sellerRepository;
 

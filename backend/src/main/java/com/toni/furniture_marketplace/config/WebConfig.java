@@ -2,6 +2,7 @@ package com.toni.furniture_marketplace.config;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,17 +17,25 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     private final Path uploadDir;
+    private final List<String> allowedOrigins;
 
-    public WebConfig(@Value("${app.upload.dir}") String uploadDir) {
+    public WebConfig(
+            @Value("${app.upload.dir}") String uploadDir,
+            // Comma-separated list of origins allowed to call /api/**. Defaults to the
+            // local dev servers; set APP_CORS_ORIGINS in deployed environments to your
+            // frontend URL, e.g. https://furniture.vercel.app
+            @Value("${app.cors.origins:http://localhost:3000,http://localhost:5173}") String allowedOrigins) {
         this.uploadDir = Paths.get(uploadDir).toAbsolutePath().normalize();
+        this.allowedOrigins = Arrays.stream(allowedOrigins.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
     }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of(
-                "http://localhost:3000",  // React (Create React App)
-                "http://localhost:5173")); // Vite
+        config.setAllowedOrigins(allowedOrigins);
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
 

@@ -27,7 +27,7 @@ public class FileStorageService {
     private static final Set<String> ALLOWED_CONTENT_TYPES =
             Set.of("image/png", "image/jpeg", "image/jpg", "image/webp", "image/gif");
 
-    private static final long MAX_BYTES = 8L * 1024 * 1024; // 8 MB
+    private static final long MAX_BYTES = 10L * 1024 * 1024; // 10 MB
 
     private final Path uploadDir;
 
@@ -56,7 +56,7 @@ public class FileStorageService {
             throw new IllegalArgumentException("No image file was provided.");
         }
         if (file.getSize() > MAX_BYTES) {
-            throw new IllegalArgumentException("Image is too large. Maximum size is 8 MB.");
+            throw new IllegalArgumentException("Image is too large. Maximum size is 10 MB.");
         }
 
         String contentType = file.getContentType();

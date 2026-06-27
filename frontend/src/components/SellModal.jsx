@@ -91,6 +91,16 @@ export default function SellModal({ onClose, onSubmitted }) {
 
     if (!form.category) next.category = 'Please choose a category.';
 
+    // A photo is required. The backend enforces this too (FurnitureRequest
+    // @NotBlank imageUrl) and is the source of truth, but validating here avoids
+    // a wasted upload/seller round-trip and surfaces the error immediately.
+    if (!imageFile && !errors.image) {
+      next.image = 'Please upload a picture of the furniture.';
+    } else if (errors.image) {
+      // Preserve an existing image error (e.g. bad type/size) from the picker.
+      next.image = errors.image;
+    }
+
     if (!form.sellerName.trim()) next.sellerName = 'Please enter your name.';
 
     if (!form.sellerEmail.trim()) {
@@ -184,12 +194,15 @@ export default function SellModal({ onClose, onSubmitted }) {
       // keys: name/email; furniture keys: title/price/category. Re-key the
       // seller's "name"/"email" onto our seller* fields so they show inline.
       if (err instanceof ApiError && err.fieldErrors) {
-        const { name, email, ...rest } = err.fieldErrors;
+        // Re-key backend field names onto our form fields: seller name/email map
+        // to seller*, and the furniture "imageUrl" maps to our "image" field.
+        const { name, email, imageUrl, ...rest } = err.fieldErrors;
         setErrors((prev) => ({
           ...prev,
           ...rest,
           ...(name ? { sellerName: name } : {}),
           ...(email ? { sellerEmail: email } : {}),
+          ...(imageUrl ? { image: imageUrl } : {}),
         }));
       }
       setSubmitError(
@@ -334,7 +347,7 @@ export default function SellModal({ onClose, onSubmitted }) {
                 />
                 <div>
                   <span className="mb-1.5 block text-xs font-semibold uppercase tracking-overline text-ink-500">
-                    Photo (optional)
+                    Photo
                   </span>
                   {imagePreview ? (
                     <div className="flex items-center gap-3">

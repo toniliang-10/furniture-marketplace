@@ -1,29 +1,17 @@
 import { useMemo, useState } from 'react';
 import { formatCategory, formatPrice } from '../utils/format.js';
 
-// Keyword per category for the stock-photo fallback.
-const CATEGORY_KEYWORD = {
-  SOFA: 'sofa',
-  TABLE: 'dining-table',
-  CHAIR: 'chair',
-  BED: 'bed',
-  DESK: 'desk',
-  OTHER: 'furniture',
-};
-
 /**
  * Build an ordered list of image sources to try for an item.
- * Primary source is the backend's imageUrl (e.g. http://localhost:8080/images/
- * furniture/sofa1.png, served from src/main/resources/static/). If that ever
- * fails to load we fall back to a category-relevant stock photo (stable per item
- * id) before finally showing the inline "no image" mark.
+ * The only source is the seller-provided imageUrl (e.g. http://localhost:8080/
+ * images/furniture/sofa1.png, served from src/main/resources/static/). Listings
+ * now require a real photo at creation time, so we never substitute a random or
+ * stock image. If the provided URL fails to load, the inline "no image" mark is
+ * shown instead.
  */
 function buildImageSources(item) {
   const sources = [];
   if (item.imageUrl) sources.push(item.imageUrl);
-  const keyword = CATEGORY_KEYWORD[item.category] ?? 'furniture';
-  // loremflickr returns a keyword-relevant photo; `lock` keeps it stable per item.
-  sources.push(`https://loremflickr.com/800/600/${keyword}?lock=${item.id}`);
   return sources;
 }
 

@@ -12,7 +12,7 @@ public record FurnitureRequest(
         String description,
         @NotNull @DecimalMin(value = "0.0", inclusive = false) BigDecimal price,
         @NotNull Category category,
-        String imageUrl,
+        @NotBlank(message = "Please upload a picture of the furniture.") String imageUrl,
         ItemStatus status,
         Long sellerId) {
 }

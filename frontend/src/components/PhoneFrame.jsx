@@ -27,11 +27,55 @@
  *
  * @param {{ children: import('react').ReactNode }} props
  */
+function InfoIcon() {
+  return (
+    <svg
+      className="mt-px h-4 w-4 shrink-0 text-clay-500"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 11v5M12 8h.01" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/**
+ * BackendNotice
+ *
+ * Info callout warning that the Render free-tier backend can take ~55s to wake.
+ * Rendered in the page area AROUND the phone — a sidebar column beside the
+ * device body on desktop, stacked above the phone on mobile (no horizontal room
+ * for a side placement). Intentionally OUTSIDE the phone screen so it isn't
+ * clipped by the device frame or covered by the in-app modals.
+ */
+function BackendNotice() {
+  return (
+    <div className="mx-auto w-full max-w-md px-5 pt-6 md:absolute md:right-full md:top-1/2 md:ml-0 md:mr-6 md:w-[260px] md:max-w-none md:-translate-y-1/2 md:px-0 md:pt-0">
+      <div className="flex items-start gap-2.5 rounded-card border border-line bg-paper-raised px-4 py-3 shadow-soft">
+        <InfoIcon />
+        <p className="text-xs leading-relaxed text-ink-500">
+          <span className="font-medium text-ink-700">Note:</span> The backend is
+          hosted on Render&apos;s free tier and may take up to ~55 seconds to
+          wake up on first load. Thanks for your patience!
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function PhoneFrame({ children }) {
   return (
     <div className="md:flex md:min-h-[100dvh] md:items-center md:justify-center md:bg-paper-sunk md:py-8">
       {/* Device body. Transparent below md; dark bezel with side buttons at md+. */}
       <div className="relative md:rounded-[2.75rem] md:bg-ink-900 md:p-3 md:shadow-card md:ring-1 md:ring-black/5">
+        {/* Cold-start notice — absolute sidebar beside the phone (desktop),
+            normal-flow above the app (mobile). Absolute on desktop keeps it out
+            of flow so the phone stays exactly centered. */}
+        <BackendNotice />
         {/* Dynamic-island speaker — sits in the status-bar area above app content. */}
         <div
           aria-hidden="true"

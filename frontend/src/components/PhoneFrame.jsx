@@ -46,21 +46,31 @@ function InfoIcon() {
 /**
  * BackendNotice
  *
- * Info callout warning that the Render free-tier backend can take ~55s to wake.
- * Rendered in the page area AROUND the phone — a sidebar column beside the
- * device body on desktop, stacked above the phone on mobile (no horizontal room
- * for a side placement). Intentionally OUTSIDE the phone screen so it isn't
- * clipped by the device frame or covered by the in-app modals.
+ * Info callouts about the Render free-tier backend, rendered in the page area
+ * AROUND the phone — a sidebar column beside the device body on desktop, stacked
+ * above the phone on mobile (no horizontal room for a side placement).
+ * Intentionally OUTSIDE the phone screen so they aren't clipped by the device
+ * frame or covered by the in-app modals. Two stacked callouts:
+ *   1. cold-start wake time (~55s)
+ *   2. outbound SMTP is blocked, so emails don't reach the recipient's inbox
  */
 function BackendNotice() {
   return (
-    <div className="mx-auto w-full max-w-md px-5 pt-6 md:absolute md:right-full md:top-1/2 md:ml-0 md:mr-6 md:w-[260px] md:max-w-none md:-translate-y-1/2 md:px-0 md:pt-0">
+    <div className="mx-auto flex w-full max-w-md flex-col gap-3 px-5 pt-6 md:absolute md:right-full md:top-1/2 md:ml-0 md:mr-6 md:w-[260px] md:max-w-none md:-translate-y-1/2 md:px-0 md:pt-0">
       <div className="flex items-start gap-2.5 rounded-card border border-line bg-paper-raised px-4 py-3 shadow-soft">
         <InfoIcon />
         <p className="text-xs leading-relaxed text-ink-500">
           <span className="font-medium text-ink-700">Note:</span> The backend is
           hosted on Render&apos;s free tier and may take up to ~55 seconds to
           wake up on first load. Thanks for your patience!
+        </p>
+      </div>
+      <div className="flex items-start gap-2.5 rounded-card border border-line bg-paper-raised px-4 py-3 shadow-soft">
+        <InfoIcon />
+        <p className="text-xs leading-relaxed text-ink-500">
+          <span className="font-medium text-ink-700">Heads up:</span> Render&apos;s
+          free tier blocks outbound SMTP, so notification emails won&apos;t
+          reach the recipient&apos;s inbox.
         </p>
       </div>
     </div>
